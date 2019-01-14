@@ -1,0 +1,3 @@
+INSERT INTO loginTBL(ID, Name, LoginTime) VALUES('304024','fengyingjie','20190114100603');
+INSERT INTO loginTBL(ID, Name, LoginTime) VALUES('304001','test1','20180114100603');
+INSERT INTO loginTBL(ID, Name, LoginTime) VALUES('304002','test3','20181114100603');
