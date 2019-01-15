@@ -4,11 +4,14 @@ package com.fyj.weixin.demo.Controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fyj.weixin.Util.CheckoutUtil;
 import com.fyj.weixin.demo.model.LoginEntity;
 import com.fyj.weixin.demo.model.LoginRepository;
 
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -28,6 +31,24 @@ public class HelloController {
 
         return "d2";
     }
+	
+	@GetMapping(path="BasicService")
+	public String basicService(String signature,String timestamp,String nonce,String echostr,
+			HttpServletRequest request) {
+				
+//		//String signature = request.getParameter("signature");
+//		String timestamp = request.getParameter("timestamp"); 
+//		String nonce = request.getParameter("nonce");
+//		String echostr = request.getParameter("echostr");
+	
+		if(CheckoutUtil.checkSignature(signature, timestamp, nonce)) {
+			log.debug("checkSignature OK");
+			return echostr;
+		}else {
+			log.debug("checkSignature NG");
+			return "echostr Error";
+		}
+	}
 	
     @GetMapping(path="/add2") // “/add”路径映射到addNewUser方法上
     public @ResponseBody String addNewUser2 () {
