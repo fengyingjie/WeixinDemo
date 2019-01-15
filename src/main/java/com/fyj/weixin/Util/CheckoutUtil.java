@@ -3,11 +3,9 @@ package com.fyj.weixin.Util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import com.fyj.weixin.demo.Controller.HelloController;
+import lombok.extern.log4j.Log4j2;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
+@Log4j2
 public class CheckoutUtil {
 	
     // ��ӿ�������Ϣ�е�TokenҪһ��

@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fyj.weixin.Util.CheckoutUtil;
+import com.fyj.weixin.demo.bean.TextMsgBean;
 import com.fyj.weixin.demo.model.LoginEntity;
 import com.fyj.weixin.demo.model.LoginRepository;
 
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,18 +30,13 @@ public class HelloController {
 	
 	@GetMapping("/d2")
     public String index() {
-
+		log.debug("d2 OK");
         return "d2";
     }
 	
 	@GetMapping(path="BasicService")
 	public String basicService(String signature,String timestamp,String nonce,String echostr,
 			HttpServletRequest request) {
-				
-//		//String signature = request.getParameter("signature");
-//		String timestamp = request.getParameter("timestamp"); 
-//		String nonce = request.getParameter("nonce");
-//		String echostr = request.getParameter("echostr");
 	
 		if(CheckoutUtil.checkSignature(signature, timestamp, nonce)) {
 			log.debug("checkSignature OK");
@@ -48,6 +45,21 @@ public class HelloController {
 			log.debug("checkSignature NG");
 			return "echostr Error";
 		}
+	}
+	
+	@PostMapping(path="BasicService")
+	public TextMsgBean receviceMessge() {//@RequestBody TextMsgBean inBean) {
+	
+		TextMsgBean outBean = new TextMsgBean();
+		//log.debug("inBean:"+inBean.toString());
+		
+		outBean.setFromUserName("inBean.getToUserName()");
+		outBean.setToUserName("inBean.getFromUserName()");
+		outBean.setMsgType("text");
+		outBean.setContent("text1");
+		
+		log.debug("outBean:"+outBean.toString());
+		return outBean;
 	}
 	
     @GetMapping(path="/add2") // “/add”路径映射到addNewUser方法上
