@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fyj.weixin.Util.CheckoutUtil;
+import com.fyj.weixin.demo.bean.TextMsgBean;
 import com.fyj.weixin.demo.model.LoginEntity;
 import com.fyj.weixin.demo.model.LoginRepository;
 
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,15 +34,22 @@ public class HelloController {
         return "d2";
     }
 	
-	@GetMapping(path="BasicService")
+	@PostMapping("/BasicService")
+	public TextMsgBean postMessage(TextMsgBean inBean) {
+		
+		TextMsgBean outBean = new TextMsgBean();
+		outBean.setFromUserName(inBean.getToUserName());
+		outBean.setToUserName(inBean.getFromUserName());
+		outBean.setContent("test");
+		
+		return outBean;
+		
+	}
+	
+	@GetMapping("/BasicService")
 	public String basicService(String signature,String timestamp,String nonce,String echostr,
 			HttpServletRequest request) {
-				
-//		//String signature = request.getParameter("signature");
-//		String timestamp = request.getParameter("timestamp"); 
-//		String nonce = request.getParameter("nonce");
-//		String echostr = request.getParameter("echostr");
-	
+					
 		if(CheckoutUtil.checkSignature(signature, timestamp, nonce)) {
 			log.debug("checkSignature OK");
 			return echostr;
