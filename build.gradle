@@ -37,7 +37,7 @@ dependencies {
     compile("com.sun.xml.bind:jaxb-impl:2.3.0")
     compile("javax.activation:javax.activation-api")
     providedCompile("org.projectlombok:lombok")
-    providedCompile("com.h2database:h2")
+    //providedRuntime("com.h2database:h2")
     //postgresql
     runtime("org.postgresql:postgresql")
     testImplementation('org.springframework.boot:spring-boot-starter-test')

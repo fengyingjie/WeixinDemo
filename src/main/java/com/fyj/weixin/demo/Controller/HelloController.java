@@ -48,18 +48,20 @@ public class HelloController {
 	}
 	
 	@PostMapping(path="BasicService")
-	public TextMsgBean receviceMessge() {//@RequestBody TextMsgBean inBean) {
+	public @ResponseBody String receviceMessge(@RequestBody TextMsgBean inBean) {
 	
 		TextMsgBean outBean = new TextMsgBean();
-		//log.debug("inBean:"+inBean.toString());
+		log.debug("inBean:"+inBean.toString());
 		
-		outBean.setFromUserName("inBean.getToUserName()");
-		outBean.setToUserName("inBean.getFromUserName()");
+		outBean.setFromUserName(inBean.getToUserName());
+		outBean.setToUserName(inBean.getFromUserName());
+		outBean.setCreateTime(inBean.getCreateTime());
 		outBean.setMsgType("text");
 		outBean.setContent("text1");
+		outBean.setMsgId(inBean.getMsgId());
 		
 		log.debug("outBean:"+outBean.toString());
-		return outBean;
+		return outBean.xmlString();
 	}
 	
     @GetMapping(path="/add2") // “/add”路径映射到addNewUser方法上
