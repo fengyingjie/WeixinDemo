@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Test</title>
+<script src="https://code.jquery.com/jquery-1.12.4.js">
+</script>
+<script>
+$(function(){
+	jQuery.support.cors = true;
+	$.ajaxSetup({
+    	cache : false
+	});
+	setInterval(getData,1000);
+
+});
+
+function getData(){
+	$.get("http://47.94.142.3/example/html/nameTable",//"http://localhost:8080/example/html/nameTable",
+	function(result){
+    	$("#nameDiv").html(result);
+    });
+}
+</script>
+</head>
+<body>
+	
+<p>测试</p>
+
+<div id="nameDiv">
+没有人
+<div>
+</body>
+</html>
