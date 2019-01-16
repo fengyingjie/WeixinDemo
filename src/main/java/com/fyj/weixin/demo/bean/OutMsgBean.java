@@ -18,25 +18,28 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TextMsgBean {
+public abstract class OutMsgBean {
 	
 	@XmlElement
-	private String ToUserName;
+	protected String ToUserName;
 	
 	@XmlElement
-	private String FromUserName;
+	protected String FromUserName;
 	
 	@XmlElement
-	private String CreateTime;
+	protected String CreateTime;
 	
 	@XmlElement
-	private String MsgType;
+	protected String MsgType;
 	
 	@XmlElement
-	private String Content;
+	protected String Content;
 	
 	@XmlElement
-	private String MsgId;
+	protected String MsgId;
+	
+	@XmlElement
+	protected String Recognition;
 	
     /**
 	 * 对象转XML
@@ -44,10 +47,10 @@ public class TextMsgBean {
 	 * @param obj 对象
 	 * @return 字符串
 	 */
-	public String xmlString() {
+	public final String xmlString(Class type) {
 	    ByteArrayOutputStream out = new ByteArrayOutputStream();
 	    try {
-	        JAXBContext context = JAXBContext.newInstance(this.getClass());
+	        JAXBContext context = JAXBContext.newInstance(type);
 	        Marshaller marshaller = context.createMarshaller();
 	        marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
 	        marshaller.marshal(this, out);

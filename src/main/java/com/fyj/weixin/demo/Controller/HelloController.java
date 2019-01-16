@@ -5,9 +5,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fyj.weixin.Util.CheckoutUtil;
-import com.fyj.weixin.demo.bean.TextMsgBean;
+import com.fyj.weixin.demo.bean.InMsgBean;
+import com.fyj.weixin.demo.bean.OutMsgBean;
+import com.fyj.weixin.demo.bean.OutTextMsgBean;
 import com.fyj.weixin.demo.model.LoginEntity;
 import com.fyj.weixin.demo.model.LoginRepository;
+import com.fyj.weixin.demo.service.MsgService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +30,9 @@ public class HelloController {
 
 	@Autowired//自动从spring容器中加载userRepository
     private LoginRepository loginRepository;
+	
+	@Autowired//自动从spring容器中加载userRepository
+    private MsgService msgService;
 	
 	@GetMapping("/d2")
     public String index() {
@@ -48,20 +54,24 @@ public class HelloController {
 	}
 	
 	@PostMapping(path="BasicService")
-	public @ResponseBody String receviceMessge(@RequestBody TextMsgBean inBean) {
+	public @ResponseBody String receviceMessge(@RequestBody InMsgBean inBean) {
 	
-		TextMsgBean outBean = new TextMsgBean();
+		//OutTextMsgBean outBean = new OutTextMsgBean();
+		
+		//InMsgBean inBean = new InMsgBean();
+		//inBean.setRecognition("语音识别很简单");
 		log.debug("inBean:"+inBean.toString());
 		
-		outBean.setFromUserName(inBean.getToUserName());
-		outBean.setToUserName(inBean.getFromUserName());
-		outBean.setCreateTime(inBean.getCreateTime());
-		outBean.setMsgType("text");
-		outBean.setContent("text1");
-		outBean.setMsgId(inBean.getMsgId());
+//		outBean.setFromUserName(inBean.getToUserName());
+//		outBean.setToUserName(inBean.getFromUserName());
+//		outBean.setCreateTime(inBean.getCreateTime());
+//		outBean.setMsgType("text");
+//		outBean.setContent(inBean.getRecognition());
+		//outBean.setMsgId(inBean.getRecognition());
 		
+		OutTextMsgBean outBean = msgService.addTodo(inBean);
 		log.debug("outBean:"+outBean.toString());
-		return outBean.xmlString();
+		return outBean.xmlString(outBean.getClass());
 	}
 	
     @GetMapping(path="/add2") // “/add”路径映射到addNewUser方法上
