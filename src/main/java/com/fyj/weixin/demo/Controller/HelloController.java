@@ -61,7 +61,7 @@ public class HelloController {
 		outBean.setMsgId(inBean.getMsgId());
 		
 		log.debug("outBean:"+outBean.toString());
-		return outBean.xmlString();
+		return outBean.xmlString(outBean.getClass());
 	}
 	
     @GetMapping(path="/add2") // “/add”路径映射到addNewUser方法上
