@@ -38,7 +38,7 @@ dependencies {
     compile("javax.activation:javax.activation-api")
     compile("com.baidu.aip:java-sdk:4.10.0")
     providedCompile("org.projectlombok:lombok")
-    //providedRuntime("com.h2database:h2")
+    providedRuntime("com.h2database:h2")
     //postgresql
     runtime("org.postgresql:postgresql")
     testImplementation('org.springframework.boot:spring-boot-starter-test')

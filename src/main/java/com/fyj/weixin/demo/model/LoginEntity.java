@@ -1,5 +1,7 @@
 package com.fyj.weixin.demo.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "loginTBL") 
-public class LoginEntity {
+public class LoginEntity implements Serializable {
 
 	@Id
 	@Column(name = "ID", nullable = false)
