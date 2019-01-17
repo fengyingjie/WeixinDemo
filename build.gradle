@@ -36,6 +36,7 @@ dependencies {
     compile("com.sun.xml.bind:jaxb-core:2.3.0")
     compile("com.sun.xml.bind:jaxb-impl:2.3.0")
     compile("javax.activation:javax.activation-api")
+    compile("com.baidu.aip:java-sdk:4.10.0")
     providedCompile("org.projectlombok:lombok")
     //providedRuntime("com.h2database:h2")
     //postgresql
