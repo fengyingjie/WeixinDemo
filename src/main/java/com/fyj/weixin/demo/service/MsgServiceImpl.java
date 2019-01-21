@@ -60,7 +60,7 @@ public class MsgServiceImpl implements MsgService {
 		apiMap.put("APIKey","s2X6NfUtFrAKREYOykvvRMmq");
 		apiMap.put("SecretKey","daRUfva12U3SxnlX7m8GNNiiZ09yhXeS");
 		BaiDuKeyList.add(apiMap);
-		// 时间长了以后会不会Token过期
+
 		// 初始化一个AipNlp
 		log.debug("init MsgServiceImpl");
 
