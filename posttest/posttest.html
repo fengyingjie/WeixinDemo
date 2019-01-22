@@ -22,6 +22,14 @@ $(document).ready(function(){
     	);
 	    alert("OK2");
 	});
+	
+	$("#btn2").click(function(){
+		//alert("OK");
+		jQuery.support.cors = true;
+		
+		$("#fo01").submit();
+	    alert("OK2");
+	});
 });
 </script>
 </head>
@@ -32,5 +40,11 @@ $(document).ready(function(){
 
 
 <button id="btn1"/>
+<button id="btn2"/>
+<form id="fo01" action="http://localhost/userLogin">
+<input type='text' name='ACTION' value='ACTION'>
+<input type='text' name='ID' value='ID'>
+<input type='text' name='LOGINTIME' value='20190101101010'>
+</form>
 </body>
 </html>

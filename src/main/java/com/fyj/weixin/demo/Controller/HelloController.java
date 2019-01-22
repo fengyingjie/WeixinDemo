@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -123,4 +124,33 @@ public class HelloController {
 
         return modelAndView;
     }
+    
+	@RequestMapping(path="/userLogin")
+	public @ResponseBody String userLogin(String ACTION,String ID,String LOGINTIME,
+			HttpServletRequest request) {
+		
+		//request.getParameter("ACTION")
+		log.debug("ACTION:"+ACTION + ",ID:"+ID + ",LOGINTIME:"+LOGINTIME);
+		LoginEntity loginEn = new LoginEntity();
+		loginEn.setId(ID);
+		loginEn.setName(ID);
+		loginEn.setROOMID("00202001");
+		loginEn.setTime(LOGINTIME);
+		loginRepository.save(loginEn);
+		//OutTextMsgBean outBean = new OutTextMsgBean();
+		
+		//InMsgBean inBean = new InMsgBean();
+		//inBean.setRecognition("语音识别很简单");
+		
+		
+//		outBean.setFromUserName(inBean.getToUserName());
+//		outBean.setToUserName(inBean.getFromUserName());
+//		outBean.setCreateTime(inBean.getCreateTime());
+//		outBean.setMsgType("text");
+//		outBean.setContent(inBean.getRecognition());
+		//outBean.setMsgId(inBean.getRecognition());
+		
+		//log.debug("outBean:"+outBean.toString());
+		return "";
+	}
 }

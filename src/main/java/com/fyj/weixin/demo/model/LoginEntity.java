@@ -20,10 +20,13 @@ public class LoginEntity implements Serializable {
 	@Column(name = "ID", nullable = false)
     private String id;
 
+    @Column(name = "ROOMID", nullable = false)
+    private String ROOMID;
+    
     @Column(name = "Name", nullable = true)
     private String name;
 
-    @Column(name = "LoginTime", nullable = true)
+    @Column(name = "LOGINTIME", nullable = true)
     private String time;
 
 }
