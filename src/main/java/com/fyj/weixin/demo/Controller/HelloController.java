@@ -14,6 +14,9 @@ import com.fyj.weixin.demo.service.MsgService;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,7 +138,10 @@ public class HelloController {
 		loginEn.setId(ID);
 		loginEn.setName(ID);
 		loginEn.setROOMID("00202001");
-		loginEn.setTime(LOGINTIME);
+		
+		Date now = new Date(); 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");//可以方便地修改日期格
+		loginEn.setTime(dateFormat.format(now));
 		loginRepository.save(loginEn);
 		//OutTextMsgBean outBean = new OutTextMsgBean();
 		

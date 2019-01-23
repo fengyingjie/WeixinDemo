@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.baidu.aip.nlp.AipNlp;
 import com.fyj.weixin.demo.bean.InMsgBean;
@@ -94,8 +95,8 @@ public class MsgServiceImpl implements MsgService {
 	    APIKEYEntity apikey = apiKeyRepository.getNextApiKey().get(0);
         client = new AipNlp(apikey.getAppid(), apikey.getApikey(), apikey.getSecretkey());
         // 可选：设置代理服务器地址, http和socket二选一，或者均不设置
-        client.setHttpProxy("10.167.251.83", 8080);// 设置http代理
-        //client.setSocketProxy("proxy_host", proxy_port);  // 设置socket代理
+        //client.setHttpProxy("10.167.251.83", 8080);// 设置http代理
+        
         
         //apikey.setUsedtime(String.valueOf(System.currentTimeMillis()));
         apiKeyRepository.updateApiKeyTime(apikey);
@@ -126,7 +127,11 @@ public class MsgServiceImpl implements MsgService {
 			log.debug("find user in " + name);
 			List<LoginEntity> userList = loginRepository.findUserinRoom(name);
 			for(LoginEntity user : userList){
-				resultStr = resultStr + user.getName();
+				resultStr = resultStr + user.getName() + ",";
+			}
+			
+			if(StringUtils.isEmpty(resultStr)) {
+				resultStr = "没人";
 			}
 			result.setContent(resultStr);
 			return result;
@@ -151,7 +156,7 @@ public class MsgServiceImpl implements MsgService {
 			return result;
 		}
 		
-		resultStr = "没听懂，你说啥？" + text + "么？";
+		resultStr = "没听懂，你说啥？是" + text + "么？";
 		result.setContent(resultStr);
 	    //System.out.println();
 		return result;
