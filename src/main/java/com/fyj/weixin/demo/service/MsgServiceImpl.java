@@ -88,9 +88,21 @@ public class MsgServiceImpl implements MsgService {
 		result.setCreateTime(inBean.getCreateTime());
 		result.setMsgType("text");
 		
+		String inputText = "";
+		if("text".equals(inBean.getMsgType())) {
+			inputText = inBean.getContent();
+		}else {
+			inputText = inBean.getRecognition();
+		}
 		
-	    String text = inBean.getRecognition().trim();
-	    log.debug("text:"+ text);
+	    
+	    if(StringUtils.isEmpty(inputText)) {
+	    	inputText = "";
+	    }else {
+	    	inputText = inputText.trim();
+	    }
+	    
+	    log.debug("text:"+ inputText);
 		//HashMap<String,String> apiMap = BaiDuKeyList.get((int) ((new Date().getTime()/200) % 5));
 	    APIKEYEntity apikey = apiKeyRepository.getNextApiKey().get(0);
         client = new AipNlp(apikey.getAppid(), apikey.getApikey(), apikey.getSecretkey());
@@ -105,25 +117,25 @@ public class MsgServiceImpl implements MsgService {
 	    options.put("mode", 1);
 	    
 	    // 依存句法分析
-	    JSONObject res = client.depParser(text, options);
+	    JSONObject res = client.depParser(inputText, options);
 	    log.debug("res:"+ res.toString(2));
 	    
 	    
 	    String regEx1 = "(.*)谁在(.*)会议室(.*)";
 		Pattern pattern1 = Pattern.compile(regEx1);
-		Matcher matcher1 = pattern1.matcher(text);
+		Matcher matcher1 = pattern1.matcher(inputText);
 		boolean rs1 = matcher1.matches();
 		
 		String regEx2 = "(.*)约一下??会议室((.+)点(.*))到((.+)点(.*))(.*)";
 		Pattern pattern2 = Pattern.compile(regEx2);
-		Matcher matcher2 = pattern2.matcher(text);
+		Matcher matcher2 = pattern2.matcher(inputText);
 		boolean rs2 = matcher2.matches();
 		
 		String resultStr="";
 		if(rs1) {
 			
-			int index = text.indexOf("会议室");
-			String name = text.substring(index-2, index);
+			int index = inputText.indexOf("会议室");
+			String name = inputText.substring(index-2, index);
 			log.debug("find user in " + name);
 			List<LoginEntity> userList = loginRepository.findUserinRoom(name);
 			for(LoginEntity user : userList){
@@ -156,7 +168,7 @@ public class MsgServiceImpl implements MsgService {
 			return result;
 		}
 		
-		resultStr = "没听懂，你说啥？是" + text + "么？";
+		resultStr = "没听懂，你说啥？" + res.toString(2);
 		result.setContent(resultStr);
 	    //System.out.println();
 		return result;
